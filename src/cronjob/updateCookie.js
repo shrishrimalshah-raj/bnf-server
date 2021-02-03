@@ -17,8 +17,10 @@ const getCookie = async () => {
     const headers = response.headers;
     cookie = headers["set-cookie"];
     cookie = `${cookie[0]};${cookie[1]};`;
+    return cookie;
   } catch (error) {
     console.log('error getCookie() ====>', error)
+    return error;
   }
 
   console.log("************ CRON JOB END FOR UPDATING COOKIE ***************");
