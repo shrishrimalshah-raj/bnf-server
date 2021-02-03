@@ -35,8 +35,14 @@ const io = socketIo(server, {
 //Hello WORLD
 app.get("/api", async (req, res) => {
   try {
-    const res = await getCookie();
-    res.json({ message: "!!! updateCookie !!!" });
+    // const res = await getCookie();
+    getCookie()
+      .then((res) => {
+        res.json({ message: "!!! updateCookie !!!" });
+      })
+      .catch((error) => {
+        res.json({ message: "!!! Error In UpdateCookie !!!" });
+      });
   } catch (error) {
     res.json({ message: "!!! Error In UpdateCookie !!!" });
   }
