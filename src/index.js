@@ -34,8 +34,12 @@ const io = socketIo(server, {
 
 //Hello WORLD
 app.get("/api", async (req, res) => {
-  await getCookie();
-  res.json({ message: "!!! updateCookie !!!" });
+  try {
+    const res = await getCookie();
+    res.json({ message: "!!! updateCookie !!!" });
+  } catch (error) {
+    res.json({ message: "!!! Error In UpdateCookie !!!" });
+  }
 });
 
 // SEED DATA API
