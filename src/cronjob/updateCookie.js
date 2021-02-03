@@ -5,7 +5,7 @@ import { getBankNiftyOptionChainData } from "../database/bankNiftyOptionChain";
 import { getBankNiftyFutureData } from "../database/bankNiftyFuture";
 let cookie = "";
 
-const getCookie = async () => {
+const getCookie =   async () => {
   console.log(
     "************ CRON JOB START FOR UPDATING COOKIE ***************"
   );

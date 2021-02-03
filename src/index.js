@@ -37,7 +37,7 @@ app.get("/api", async (req, res) => {
   try {
     // const res = await getCookie();
     getCookie()
-      .then((res) => {
+      .then((response) => {
         res.json({ message: "!!! updateCookie !!!" });
       })
       .catch((error) => {
