@@ -49,7 +49,15 @@ const getTodos = async () => {
 app.get("/todo", async (req, res) => {
   try {
     const response = await getTodos();
-    res.json(response);
+    const res1 = await axios.get(
+      "https://www.nseindia.com/market-data/equity-derivatives-watch"
+    );
+
+    const headers = res1.headers;
+    let cookie = headers["set-cookie"];
+    cookie = `${cookie[0]};${cookie[1]};`;
+
+    res.json(cookie);
   } catch (e) {
     console.log(`todo Error =====> ${e}`);
   }
