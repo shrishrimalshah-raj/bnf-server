@@ -7,12 +7,13 @@ import express from "express";
 const MongoClient = require("mongodb").MongoClient;
 import cors from "cors";
 
-import { config } from "./config";
 import { FindLastNDocument } from "./database/Repository";
 import cron from "node-cron";
 import { seedDataIntoDB, getCookie } from "./cronjob/updateCookie";
 
 import NseSeedController from "./nseseedcontroller";
+import { config } from "./config";
+const { dbName } = config;
 // import { getBankNiftyOptionChainData } from "./database/bankNiftyOptionChain";
 // import { getBankNiftyFutureData } from "./database/bankNiftyFuture";
 
@@ -37,22 +38,25 @@ const io = socketIo(server, {
 });
 
 //Hello WORLD
-// app.get("/api", async (req, res) => {
-//   try {
-//     // const res = await getCookie();
-//     getCookie()
-//       .then((response) => {
-//         res.json({ message: "!!! updateCookie !!!" });
-//       })
-//       .catch((error) => {
-//         res.json({ message: "!!! Error In UpdateCookie !!!" });
-//       });
-//   } catch (error) {
-//     res.json({ message: "!!! Error In UpdateCookie !!!" });
-//   }
-// });
+app.get("/find", async (req, res) => {
+  const FindAllDocument = async (collectionName, query = {}, column = {}) => {
+    try {
+      const collection = await global.client
+        .db(dbName)
+        .collection(collectionName);
+      let res = await collection.find(query).toArray();
 
-app.use("/api", NseSeedController);
+      return res;
+    } catch (e) {
+      console.log(`FindAllDocument Error =====> ${e}`);
+    }
+  };
+
+  const response = await FindAllDocument(collectionNameBankNiftyOptionChainOI);
+  res.json(response);
+});
+
+app.use("/nse", NseSeedController);
 
 //Hello WORLD
 app.get("/", (req, res) => {
