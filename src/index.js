@@ -13,6 +13,7 @@ import { seedDataIntoDB, getCookie } from "./cronjob/updateCookie";
 
 import NseSeedController from "./nseseedcontroller";
 import { config } from "./config";
+import axios from "axios";
 const { dbName } = config;
 // import { getBankNiftyOptionChainData } from "./database/bankNiftyOptionChain";
 // import { getBankNiftyFutureData } from "./database/bankNiftyFuture";
@@ -35,6 +36,23 @@ const io = socketIo(server, {
     origin: "*",
     methods: ["GET", "POST"],
   },
+});
+
+const getTodos = async () => {
+  const response = await axios.get(
+    "https://jsonplaceholder.typicode.com/todos/1"
+  );
+  return response.data;
+};
+
+//Hello WORLD
+app.get("/todo", async (req, res) => {
+  try {
+    const response = await getTodos();
+    res.json(response);
+  } catch (e) {
+    console.log(`todo Error =====> ${e}`);
+  }
 });
 
 //Hello WORLD
@@ -141,6 +159,7 @@ server.listen(process.env.PORT || 8080, async () => {
     process.on("SIGTERM", cleanup);
 
     console.log(`Database connection successfully ${url}`);
+    await getTodos();
     await getCookie();
     // await seedDataIntoDB()
     // cron.schedule("*/3 9-16 * * 1-5", seedDataIntoDB);
