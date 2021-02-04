@@ -146,6 +146,23 @@ io.on("connection", (socket) => {
   });
 });
 
+const url1 = "https://www.nseindia.com/market-data/equity-derivatives-watch";
+const makeRequest = async (url) => {
+  try {
+    const response = await axios.get(url);
+    if (response.status === 200) {
+      // response - object, eg { status: 200, message: 'OK' }
+      console.log("success stuff");
+      console.log(response);
+      return response;
+    }
+    return false;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+};
+
 server.listen(process.env.PORT || 8080, async () => {
   console.log(`Listening on port ${process.env.PORT || 8080}!`);
 
@@ -167,8 +184,39 @@ server.listen(process.env.PORT || 8080, async () => {
     process.on("SIGTERM", cleanup);
 
     console.log(`Database connection successfully ${url}`);
-    await getTodos();
-    await getCookie();
+    // await getTodos();
+    // await getCookie();
+    await makeRequest(url1);
+
+    // (async () => {
+    //   const res = await makeRequest(url)
+    //   console.log(res)
+    // })()
+
+    // const headers = {
+    //   headers: {
+    //     accept: "*/*",
+    //     "accept-language": "en-GB,en-US;q=0.9,en;q=0.8",
+    //     "sec-fetch-dest": "empty",
+    //     "sec-fetch-mode": "cors",
+    //     "sec-fetch-site": "same-origin",
+    //     cookie:
+    //       '_ga=GA1.2.2006193904.1593869534; _gid=GA1.2.1724336317.1601487080; bm_mi=A4238A608B7BEBA8C6F4D533B318AB50~bG/mJ1FUuif0RV4orQ51MPfNSV7lx4gUtQ1/PgYUWVKhSUK02rxxf0MImxrEh3Hm1a3QC/6vHiBve0LKiFUPA9MSDcN9nKddalQQmS+9Eiy4hr9HE8hMbth6aKaYQmd8imy0L7QyPExb+wHQ44DkNWHbvdhGDpeppop+6dWM8eTqSoUlfRyd3RvwGm3N7pqWV7LwxpvgWCFKJnxySQ4F21lEF6x+Hc/s/Ubmn/OT4El1SyvFG+P3wyKUMAd9dZ1/5QJvWwR52VCLTIr7jhx/tDDsGGoeNK/I3ojBs5nZ1L7sXZmyrMsfuNhHoli4IopkNMB86N2T60nmcdR3e2gxdg==; ak_bmsc=0A65E9193900E075D43299338D4C1DA2173F6D048B650000CB69755F25259938~pl7GDkNDEPEQGdTKb1PphdIx0Ndjc3YAZtxuunplf53TRptnijN8BR4jJOQvMGle6+8MiwVg6OkTLgP0dCqrSNToNU48+fGkRi5PF9isU4HDhuIeAhVpDXpEwpi+c745XjvELQKouRMKbVx86F3lcclubXf8X+spk3frfjj4XVQebbahs6mGVVcKS/O1W7FqQxzM/BGkDqGI2Ola2o9FuMObEY3l7Oi/M1hmH6VTjrNnJxm/A3gnzx1z+IomuOXC4u; nsit=4_lPgBG3ATtfhL-SXCoc-7O6; _gat_UA-143761337-1=1; nseappid=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhcGkubnNlIiwiYXVkIjoiYXBpLm5zZSIsImlhdCI6MTYwMTUzMDk3NCwiZXhwIjoxNjAxNTM0NTc0fQ.5IXGHjFifMkzOdc_YpTvIGX1-rgcL-xwyW6j4A5z-28; RT="z=1&dm=nseindia.com&si=b7c537c1-8452-4681-84ff-78ff633828f3&ss=kfqd8zkd&sl=2&tt=4cf&bcn=%2F%2F684d0d38.akstat.io%2F"; bm_sv=F987B3E5F59D55C8681BC7B4D65F9D33~ZP9XtgWqTIZ25LE7MTOHcMrsr2+lnWwgUrbMMHD9BAwN/854O/UIwBEfADbLCiQRJ6d7S6zPX5EeH28d2lFxpG9BbQ9ywXfB8LeG7pnMgwwZeai5eexh/dnHQOQeNMnescQ8Yg5A9E3JlSvnNQGF9K3GNPBKj7TJAniSgn5cNaw=',
+    //     mode: "cors",
+    //     "user-agent": "Mozilla/5.0 (X11; Linux x86_64)",
+    //     "content-encoding": "gzip",
+    //     "content-type": "application/json",
+    //   },
+    // };
+
+    // // https://www.nseindia.com
+    // axios
+    //   .get(
+    //     "https://www.nseindia.com/market-data/equity-derivatives-watch",
+    //     headers
+    //   )
+    //   .then((res) => console.log("res", res))
+    //   .catch((err) => console.error(err)); // promise
     // await seedDataIntoDB()
     // cron.schedule("*/3 9-16 * * 1-5", seedDataIntoDB);
     // cron.schedule("*/20 9-16 * * 1-5", getCookie);
