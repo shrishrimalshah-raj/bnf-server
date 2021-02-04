@@ -5,7 +5,7 @@ import { getBankNiftyOptionChainData } from "../database/bankNiftyOptionChain";
 import { getBankNiftyFutureData } from "../database/bankNiftyFuture";
 let cookie = "";
 
-const getCookie =   async () => {
+const getCookie = async () => {
   console.log(
     "************ CRON JOB START FOR UPDATING COOKIE ***************"
   );
@@ -17,13 +17,15 @@ const getCookie =   async () => {
     const headers = response.headers;
     cookie = headers["set-cookie"];
     cookie = `${cookie[0]};${cookie[1]};`;
+    console.log(
+      "************ CRON JOB END FOR UPDATING COOKIE ***************"
+    );
+
     return cookie;
   } catch (error) {
-    console.log('error getCookie() ====>', error)
+    console.log("error getCookie() ====>", error);
     return error;
   }
-
-  console.log("************ CRON JOB END FOR UPDATING COOKIE ***************");
 };
 
 const seedDataIntoDB = async () => {

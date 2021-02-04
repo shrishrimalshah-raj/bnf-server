@@ -11,8 +11,12 @@ import { config } from "./config";
 import { FindLastNDocument } from "./database/Repository";
 import cron from "node-cron";
 import { seedDataIntoDB, getCookie } from "./cronjob/updateCookie";
-import { getBankNiftyOptionChainData } from "./database/bankNiftyOptionChain";
-import { getBankNiftyFutureData } from "./database/bankNiftyFuture";
+
+import NseSeedController from "./nseseedcontroller";
+// import { getBankNiftyOptionChainData } from "./database/bankNiftyOptionChain";
+// import { getBankNiftyFutureData } from "./database/bankNiftyFuture";
+
+const router = express.Router();
 
 const {
   url,
@@ -33,50 +37,22 @@ const io = socketIo(server, {
 });
 
 //Hello WORLD
-app.get("/api", async (req, res) => {
-  try {
-    // const res = await getCookie();
-    getCookie()
-      .then((response) => {
-        res.json({ message: "!!! updateCookie !!!" });
-      })
-      .catch((error) => {
-        res.json({ message: "!!! Error In UpdateCookie !!!" });
-      });
-  } catch (error) {
-    res.json({ message: "!!! Error In UpdateCookie !!!" });
-  }
-});
+// app.get("/api", async (req, res) => {
+//   try {
+//     // const res = await getCookie();
+//     getCookie()
+//       .then((response) => {
+//         res.json({ message: "!!! updateCookie !!!" });
+//       })
+//       .catch((error) => {
+//         res.json({ message: "!!! Error In UpdateCookie !!!" });
+//       });
+//   } catch (error) {
+//     res.json({ message: "!!! Error In UpdateCookie !!!" });
+//   }
+// });
 
-// SEED DATA API
-app.get("/bankNiftyOptionChain", async (req, res) => {
-  try {
-    await getBankNiftyOptionChainData();
-    res.json({ message: "!!! seeeded BNF options data !!!" });
-  } catch (error) {
-    console.log("Error =====> /bankNiftyOptionChain");
-  }
-});
-
-// SEED DATA API
-app.get("/bankNiftyFuture", async (req, res) => {
-  try {
-    await getBankNiftyFutureData();
-    res.json({ message: "!!! seeeded BNF futures data !!!" });
-  } catch (error) {
-    console.log("Error =====> /bankNiftyFuture");
-  }
-});
-
-// UPDATE TOKEN API
-app.get("/updateCookie", async (req, res) => {
-  try {
-    await getCookie();
-    res.json({ message: "!!! updateCookie !!!" });
-  } catch (error) {
-    console.log("Error =====> /bankNiftyFuture");
-  }
-});
+app.use("/api", NseSeedController);
 
 //Hello WORLD
 app.get("/", (req, res) => {
