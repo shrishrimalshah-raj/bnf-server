@@ -141,7 +141,7 @@ server.listen(process.env.PORT || 8080, async () => {
     process.on("SIGTERM", cleanup);
 
     console.log(`Database connection successfully ${url}`);
-    // await getCookie();
+    await getCookie();
     // await seedDataIntoDB()
     // cron.schedule("*/3 9-16 * * 1-5", seedDataIntoDB);
     // cron.schedule("*/20 9-16 * * 1-5", getCookie);
