@@ -186,7 +186,7 @@ server.listen(process.env.PORT || 8080, async () => {
     console.log(`Database connection successfully ${url}`);
     // await getTodos();
     // await getCookie();
-    await makeRequest(url1);
+    // await makeRequest(url1);
 
     // (async () => {
     //   const res = await makeRequest(url)
